@@ -1,25 +1,29 @@
 function findingWords(string) {
-  if(string.length <= 1) {
-    return string;
-  }
+  let series = "";
 
-  let isItVowel = isVowel(string[0]);
-  let wordSeries = string[0];
-  let words = "";
+  while(string.length >= 1) {
+    let isItVowel = isVowel(string[0]);
+    let wordSeries = string[0];
+    let words = "";
 
-  for (let index = 1; index < string.length; index++) {
-    if (isItVowel && !isVowel(string[index])) {
-      wordSeries += string[index];
-      isItVowel = false;
-    } else if (!isItVowel && isVowel(string[index])) {
-      wordSeries += string[index];
-      isItVowel = true;
-    } else {
-      words += string[index];
+    for (let index = 1; index < string.length; index++) {
+      if (isItVowel && !isVowel(string[index])) {
+        wordSeries += string[index];
+        isItVowel = false;
+      } else if (!isItVowel && isVowel(string[index])) {
+        wordSeries += string[index];
+        isItVowel = true;
+      } else {
+        words += string[index];
+      }
+
     }
-  }
-  return wordSeries + " " + findingWords(words);
 
+    series += wordSeries + " ";
+    string = words;
+  }
+
+  return series; 
 }
 
 function isVowel(char) {
@@ -46,16 +50,16 @@ function testFindingWords(string, expectedResult) {
 }
 
 function testCases() {
-  testFindingWords("apple", "ape p l");
-  testFindingWords("there", "tere h");
-  testFindingWords("hello", "helo l");
-  testFindingWords("this", "tis h");
-  testFindingWords("charitha", "carita h h");
-  testFindingWords("aeele", "ale e e");
-  testFindingWords("peace", "pece a");
-  testFindingWords("oppurtunities", "opurunitis pe t");
-  testFindingWords("oppurtunity", "opurunit p t y");
-  testFindingWords("o", "o");
+  testFindingWords("apple", "ape p l ");
+  testFindingWords("there", "tere h ");
+  testFindingWords("hello", "helo l ");
+  testFindingWords("this", "tis h ");
+  testFindingWords("charitha", "carita h h ");
+  testFindingWords("aeele", "ale e e ");
+  testFindingWords("peace", "pece a ");
+  testFindingWords("oppurtunities", "opurunitis pe t ");
+  testFindingWords("oppurtunity", "opurunit p t y ");
+  testFindingWords("o", "o ");
   testFindingWords("", ""); 
 }
 
