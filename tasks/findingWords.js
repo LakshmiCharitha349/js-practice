@@ -1,4 +1,8 @@
 function findingWords(string) {
+  if(string.length <= 1) {
+    return string;
+  }
+
   let isItVowel = isVowel(string[0]);
   let wordSeries = string[0];
   let words = "";
@@ -10,12 +14,11 @@ function findingWords(string) {
     } else if (!isItVowel && isVowel(string[index])) {
       wordSeries += string[index];
       isItVowel = true;
-    } else if (!isItVowel && !isVowel(string[index])) {
-      words += string[index] + " ";
+    } else {
+      words += string[index];
     }
   }
-  
-  return wordSeries + " " + words;
+  return wordSeries + " " + findingWords(words);
 
 }
 
@@ -43,11 +46,17 @@ function testFindingWords(string, expectedResult) {
 }
 
 function testCases() {
-  testFindingWords("apple", "ape p l ");
-  testFindingWords("there", "tere h ");
-  testFindingWords("hello", "helo l ");
-  testFindingWords("this", "tis h ");
-  testFindingWords("charitha", "carita h h ");
+  testFindingWords("apple", "ape p l");
+  testFindingWords("there", "tere h");
+  testFindingWords("hello", "helo l");
+  testFindingWords("this", "tis h");
+  testFindingWords("charitha", "carita h h");
+  testFindingWords("aeele", "ale e e");
+  testFindingWords("peace", "pece a");
+  testFindingWords("oppurtunities", "opurunitis pe t");
+  testFindingWords("oppurtunity", "opurunit p t y");
+  testFindingWords("o", "o");
+  testFindingWords("", ""); 
 }
 
 testCases();
