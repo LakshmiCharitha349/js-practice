@@ -49,11 +49,11 @@ function createHangMan(turn) {
 }
 
 function generateWord() {
-  const words = (`ant baboon badger bat bear beaver camel cat clam cobra cougar` +
-    `coyote crow deer dog donkey duck eagle ferret fox frog goat killer` +
-    `goose hawk lion lizard llama mole monkey moose murderer mouse mule new` +
-    ` potter owl panda parrot pigeon python rabbit ram conscious raven` +
-    `rhino salmon seal quiz zinc shark sheep skunk sloth snake spider` +
+  const words = (`ant baboon badger bat bear beaver camel cat clam cobra cougar ` +
+    `coyote crow deer dog donkey duck eagle ferret fox frog goat killer ` +
+    `goose hawk lion lizard llama mole monkey moose murderer mouse mule new ` +
+    `potter owl panda parrot pigeon python rabbit ram conscious raven ` +
+    `rhino salmon seal quiz zinc shark sheep skunk sloth snake spider ` +
     `stork swan tiger toad trout turkey turtle weasel whale wolf ` +
     `wombat thoughts`).split(" ");
 
