@@ -1,16 +1,74 @@
+const TITLE = "_____ HANG MAN _____";
 function createHangMan(turn) {
-  const hangMan = ["Face", "Hands", "legs", "Man", "Hung"];
-  return hangMan[turn];
+  const hangManPics = [`
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+      |
+      |
+=========`, `
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========`, `
+  +-----+
+  |     |
+  O     |
+ /|     |
+        |
+        |
+=========`, `
+  +---+
+  |   |
+  O   |
+ /|\\  |
+      |
+      |
+=========`, `
+  +---+
+  |    |
+  O    |
+ /|\\   |
+ /     |
+       |
+=========`, `
+  +---+
+  |    |
+  O    |
+ /|\\   |
+ / \\   |
+       |
+=========`];
+  console.log(hangManPics[turn]);
+}
+
+function generateWord() {
+  const words = (`ant baboon badger bat bear beaver camel cat clam cobra cougar` +
+    `coyote crow deer dog donkey duck eagle ferret fox frog goat killer` +
+    `goose hawk lion lizard llama mole monkey moose murderer mouse mule new` +
+    ` potter owl panda parrot pigeon python rabbit ram conscious raven` +
+    `rhino salmon seal quiz zinc shark sheep skunk sloth snake spider` +
+    `stork swan tiger toad trout turkey turtle weasel whale wolf ` +
+    `wombat thoughts`).split(" ");
+
+  return words[Math.floor(Math.random() * 68)];
 }
 
 function updateGuessWord(word, guessWord, char) {
   let newWord = guessWord.split("");
+
   for (let index = 0; index < word.length; index++) {
     if (word[index] === char) {
       newWord[index] = char;
-      console.log("new word", newWord[index]);
     }
   }
+
   return newWord.join("");
 }
 
@@ -20,42 +78,40 @@ function guessLetter() {
 
 function playGame(word, guessWord, totalTurns) {
   let turn = 0;
-
-  while (turn <= totalTurns) {
-    const guesChar = guessLetter();
-    guessWord = updateGuessWord(word, guessWord, guesChar);
-    if (guessWord.includes(guesChar)) {
+  while (turn < totalTurns) {
+    const guessChar = guessLetter();
+    guessWord = updateGuessWord(word, guessWord, guessChar);
+    if (guessWord.includes(guessChar)) {
       console.log(guessWord);
     } else {
-      const createMan = createHangMan(turn);
-      console.log(createMan);
+      createHangMan(turn);
       turn++;
-      if (createMan === "Hung") {
-        console.log("You lost the game ....");
-        return;
-      }
     }
+
     if (guessWord === word) {
       console.log("***** YOU WIN *****");
       return;
     }
   }
-
+  console.log("You lost....");
+  console.log("Word is ", word);
 }
+
 function displayRulesOfGame() {
   console.log(" ---> Guess letters of a word");
   console.log(" ---> For each wrong guess a man is created");
-  console.log(" ---> You have limited wrong guesses");
-  console.log(" ---> If guesses completed man is hung \n");
+  console.log(" ---> You have limit of 6 wrong guesses");
+  console.log(" ---> If all guesses completed man is hung you will lose \n");
 }
-function startGame() {
-  console.log("       _____HANGMAN_____      \n");
-  displayRulesOfGame();
-  const word = "laptab";
-  const guessWord = "______";
-  playGame(word, guessWord, 5);
 
+function startGame() {
+  console.log(TITLE);
+  displayRulesOfGame();
+  const word = generateWord();
+  const guessWord = "_".repeat(word.length);
+  playGame(word, guessWord, 6);
 }
+
 function main() {
   startGame();
 }
