@@ -8,14 +8,19 @@ function encodeString(data) {
   return stringSize + ":" + data;
 }
 
+function encodeElement(data) {
+  if (Array.isArray(data)) {
+    return encodeArrays([], data);
+  }
+
+  return encode(data);
+}
+
 function encodeArrays(encodedArray, data) {
 
   for (let index = 0; index < data.length; index++) {
-    if (Array.isArray(data[index])) {
-      encodedArray.push(encodeArrays([], data[index]));
-    } else {
-      encodedArray.push(encode(data[index]));
-    }
+    let element = encodeElement(data[index]);
+    encodedArray.push(element);
   }
 
   return "l" + encodedArray.join("") + "e";
