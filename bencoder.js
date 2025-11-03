@@ -1,5 +1,5 @@
 function encodeNumbers(data) {
-  return "i" + data + "e"; 
+  return "i" + data + "e";
 }
 
 function encodeString(data) {
@@ -8,12 +8,14 @@ function encodeString(data) {
   return stringSize + ":" + data;
 }
 
-function encodeArrays(data) {
-
-  const encodedArray = [];
+function encodeArrays(encodedArray, data) {
 
   for (let index = 0; index < data.length; index++) {
-    encodedArray.push(encode(data[index]));
+    if (Array.isArray(data[index])) {
+      encodedArray.push(encodeArrays([], data[index]));
+    } else {
+      encodedArray.push(encode(data[index]));
+    }
   }
 
   return "l" + encodedArray.join("") + "e";
@@ -22,15 +24,15 @@ function encodeArrays(data) {
 function encode(data) {
   const typeOfData = typeof data;
 
-  switch(typeOfData) {
-    case "number" :
+  switch (typeOfData) {
+    case "number":
       return encodeNumbers(data);
-    case "string" :
+    case "string":
       return encodeString(data);
-    case "object" :
-      return encodeArrays(data);
-    default :
-    return "invalid type";
+    case "object":
+      return encodeArrays([], data);
+    default:
+      return "invalid type";
   }
 
 }
@@ -57,29 +59,31 @@ function testEncode(data, expected, gist) {
 
 function testCasesOnNumbers() {
   console.log("\n--- ENCODING NUMBERS ---");
-  testEncode(123,"i123e","encode a number");
-  testEncode(0,"i0e","encode  number 0");
-  testEncode(-435,"i-435e","encode negitive number");
-  testEncode(45637,"i45637e","encode negitive number");
+  testEncode(123, "i123e", "encode a number");
+  testEncode(0, "i0e", "encode  number 0");
+  testEncode(-435, "i-435e", "encode negitive number");
+  testEncode(45637, "i45637e", "encode negitive number");
 }
 
 function testCasesOnString() {
   console.log("\n--- ENCODING STRINGS ---");
-  testEncode("string","6:string","encode a string");
-  testEncode("","0:","encode a empty string");
-  testEncode("hello","5:hello","encode a string hello");
-  testEncode("hello","5:hello","encode a string hello");
-  testEncode("hello world","11:hello world","encode a word"); 
-  testEncode("special!@#$chars","16:special!@#$chars","string with special chars"); 
+  testEncode("string", "6:string", "encode a string");
+  testEncode("", "0:", "encode a empty string");
+  testEncode("hello", "5:hello", "encode a string hello");
+  testEncode("hello", "5:hello", "encode a string hello");
+  testEncode("hello world", "11:hello world", "encode a word");
+  testEncode("special!@#$chars", "16:special!@#$chars", "string with special chars");
 }
 
 function testCasesOnArrays() {
   console.log("\n--- ENCODING ARRAYS ---");
-  testEncode(["apple",12345],"l5:applei12345ee", "encode array");
+  testEncode(["apple", 12345], "l5:applei12345ee", "encode array");
+  testEncode([], "le", "encode empty array");
+  testEncode(["apple", ["banana", -5]], "l5:applel6:bananai-5eee", "encode nested array");
 }
 
 function testAllCases() {
-  
+
   testCasesOnNumbers();
   testCasesOnString();
   testCasesOnArrays();
