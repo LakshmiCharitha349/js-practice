@@ -23,8 +23,10 @@ function testEncodeNumbers(data, expected, gist) {
 }
 
 function testCases() {
-  testEncodeNumbers(123,"i123e","encodeNumbers data");
-  testEncodeNumbers(0,"i0e","encodeNumbers number 0");
+  testEncodeNumbers(123,"i123e","encode a number");
+  testEncodeNumbers(0,"i0e","encode  number 0");
+  testEncodeNumbers(-435,"i-435e","encode negitive number");
+  testEncodeNumbers(45637,"i45637e","encode negitive number");
 }
 
 testCases();
