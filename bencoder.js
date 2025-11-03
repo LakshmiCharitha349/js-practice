@@ -8,6 +8,17 @@ function encodeString(data) {
   return stringSize + ":" + data;
 }
 
+function encodeArrays(data) {
+
+  const encodedArray = [];
+
+  for (let index = 0; index < data.length; index++) {
+    encodedArray.push(encode(data[index]));
+  }
+
+  return "l" + encodedArray.join("") + "e";
+}
+
 function encode(data) {
   const typeOfData = typeof data;
 
@@ -16,6 +27,8 @@ function encode(data) {
       return encodeNumbers(data);
     case "string" :
       return encodeString(data);
+    case "object" :
+      return encodeArrays(data);
     default :
     return "invalid type";
   }
@@ -57,12 +70,19 @@ function testCasesOnString() {
   testEncode("hello","5:hello","encode a string hello");
   testEncode("hello","5:hello","encode a string hello");
   testEncode("hello world","11:hello world","encode a word"); 
+  testEncode("special!@#$chars","16:special!@#$chars","string with special chars"); 
+}
+
+function testCasesOnArrays() {
+  console.log("\n--- ENCODING ARRAYS ---");
+  testEncode(["apple",12345],"l5:applei12345ee", "encode array");
 }
 
 function testAllCases() {
   
   testCasesOnNumbers();
   testCasesOnString();
+  testCasesOnArrays();
 }
 
 function main() {
