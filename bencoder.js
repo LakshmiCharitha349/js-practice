@@ -8,18 +8,10 @@ function encodeString(data) {
   return stringSize + ":" + data;
 }
 
-function encodeElement(data) {
-  if (Array.isArray(data)) {
-    return encodeArrays([], data);
-  }
-
-  return encode(data);
-}
-
 function encodeArrays(encodedArray, data) {
 
   for (let index = 0; index < data.length; index++) {
-    let element = encodeElement(data[index]);
+    let element = encode(data[index]);
     encodedArray.push(element);
   }
 
@@ -42,6 +34,10 @@ function encode(data) {
 
 }
 
+function decode(data) {
+  
+}
+
 function displayMessage(data, result, expected, gist) {
   const isPassed = result === expected;
   const resultSymbol = isPassed ? "✅" : "❌";
@@ -62,7 +58,7 @@ function testEncode(data, expected, gist) {
   displayMessage(data, result, expected, gist);
 }
 
-function testCasesOnNumbers() {
+function testCasesOnNumbersOnEncode() {
   console.log("\n--- ENCODING NUMBERS ---");
   testEncode(123, "i123e", "encode a number");
   testEncode(0, "i0e", "encode  number 0");
@@ -70,7 +66,7 @@ function testCasesOnNumbers() {
   testEncode(45637, "i45637e", "encode negitive number");
 }
 
-function testCasesOnString() {
+function testCasesOnStringOnEncode() {
   console.log("\n--- ENCODING STRINGS ---");
   testEncode("string", "6:string", "encode a string");
   testEncode("", "0:", "encode a empty string");
@@ -80,22 +76,22 @@ function testCasesOnString() {
   testEncode("special!@#$chars", "16:special!@#$chars", "string with special chars");
 }
 
-function testCasesOnArrays() {
+function testCasesOnArraysOnEncode() {
   console.log("\n--- ENCODING ARRAYS ---");
   testEncode(["apple", 12345], "l5:applei12345ee", "encode array");
   testEncode([], "le", "encode empty array");
   testEncode(["apple", ["banana", -5]], "l5:applel6:bananai-5eee", "encode nested array");
 }
 
-function testAllCases() {
+function testAllCasesOnEncode() {
 
-  testCasesOnNumbers();
-  testCasesOnString();
-  testCasesOnArrays();
+  testCasesOnNumbersOnEncode();
+  testCasesOnStringOnEncode();
+  testCasesOnArraysOnEncode();
 }
 
 function main() {
-  testAllCases();
+  testAllCasesOnEncode();
 }
 
 main();
