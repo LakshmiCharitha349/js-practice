@@ -26,7 +26,7 @@ function median(data) {
   return midValueOf(sortedData);
 }
 
-function displayMedian() {
+function findMedian() {
   const data = [0, 28, 0, 50, 25];
   const medianOfData = median(data);
   console.log("Median", medianOfData);
@@ -38,6 +38,7 @@ function sum(data) {
   for (let index = 0; index < data.length; index++) {
     sum += data[index];
   }
+
   return sum;
 }
 
@@ -45,39 +46,31 @@ function mean(data) {
   return sum(data) / data.length;
 }
 
-function absoluteValue(array, data) {
-  for (let index = 0; index < data.length; index++) {
-    array.push(data[index] - mean(data));
-  }
-
-  return array;
-}
-
-function sqr(data) {
-  const sqrOfElements = [];
-  for (let index = 0; index < data.length; index++) {
-    sqrOfElements.push(data[index] * data[index]);
-
-  }
-
-  return sqrOfElements;
+function sqr(value) {
+  return value * value;
 }
 
 function deviation(data) {
-  const absoluteValues = absoluteValue([], data);
-  const sqrOfAbsoluteValues = sqr(absoluteValues);
-  return Math.sqrt(sum(sqrOfAbsoluteValues) / data.length);
+  let sum = 0;
+  const meanOfData = mean(data);
+
+  for (let index = 0; index < data.length; index++) {
+    const sqrOfAbsoluteValues = sqr(data[index] - meanOfData);
+    sum = sum + sqrOfAbsoluteValues;
+  }
+
+  return Math.sqrt(sum / data.length);
 }
 
-
-function displayDeviation() {
-  console.log(deviation([0, 0, 0, 100]));
+function calculateDeviation() {
+  const data = [0, 25, 25, 50];
+  console.log("Deviation", deviation(data));
 
 }
 
 function main() {
-  displayMedian();
-  displayDeviation();
+  findMedian();
+  calculateDeviation();
 }
 
 main();
