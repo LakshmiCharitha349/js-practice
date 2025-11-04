@@ -34,10 +34,4 @@ function benchMark(size) {
   console.log(`${size} -- ${numberOfIterations}`);
 }
 
-function displayData() {
-  console.log("Sorted data is", sortedData);
-  console.log("Numnber Of times :", numberOfIterations);
-
-}
-
 benchMark(10000);
