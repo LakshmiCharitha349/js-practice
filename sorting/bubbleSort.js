@@ -1,9 +1,6 @@
-let numberOfIterations = 0;
-
 function sort(data) {
   for (let i = 0; i < data.length; i++) {
     for (let j = i + 1; j < data.length; j++) {
-      numberOfIterations++;
 
       if (data[i] > data[j]) {
         const temp = data[i];
@@ -17,21 +14,39 @@ function sort(data) {
   return data;
 }
 
-function randomBtwn(lower, upper) {
-  const randomNumber = Math.floor(Math.random() * (upper - lower));
-
-  return lower + randomNumber;
+function average(data, index1, index2) {
+  return (data[index1] + data[index2]) / 2;
 }
 
-function benchMark(size) {
-  const data = [];
-  for (let index = 0; index < size; index++) {
-    const element = randomBtwn(1, 100);
-    data.push(element);
+function isEven(value) {
+  return value % 2 === 0;
+}
+
+function midValueOf(data) {
+  const size = data.length;
+
+  if (isEven(size)) {
+    const midIndex = size / 2;
+    return average(data, midIndex - 1, midIndex);
   }
 
-  const sortedData = sort(data);
-  console.log(`${size} -- ${numberOfIterations}`);
+  return (size + 1) / 2 - 1;
+
 }
 
-benchMark(10000);
+function median(data) {
+  const sortedData = sort(data);
+  return midValueOf(sortedData);
+}
+
+function displayMedian() {
+  const data = [25, 0, 50, 25];
+  const medianOfData = median(data);
+  console.log("Median", medianOfData);
+}
+
+function main() {
+  displayMedian();
+}
+
+main();
