@@ -16,8 +16,9 @@ function sort(data) {
 
 function midValueOf(data) {
   const size = data.length;
-  const midIndex = size % 2 === 0 ? size / 2 : (size + 1) / 2;
-  return data[midIndex];
+  const lowerIndex = Math.ceil((size - 1) / 2);
+  const upperIndex = Math.floor((size - 1) / 2);
+  return (data[lowerIndex] + data[upperIndex]) / 2;
 }
 
 function median(data) {
@@ -26,7 +27,7 @@ function median(data) {
 }
 
 function displayMedian() {
-  const data = [25, 0, 50, 25];
+  const data = [0,28, 0, 50, 25];
   const medianOfData = median(data);
   console.log("Median", medianOfData);
 }
