@@ -1,11 +1,8 @@
-let numberOfIterations = 0;
-
-function sort(data) {
+function sort(data,isLessThan) {
   for (let i = 0; i < data.length; i++) {
     for (let j = i + 1; j < data.length; j++) {
-      numberOfIterations++;
 
-      if (data[i] > data[j]) {
+      if (isLessThan(data[i],data[j])) {
         const temp = data[i];
         data[i] = data[j];
         data[j] = temp;
@@ -17,21 +14,15 @@ function sort(data) {
   return data;
 }
 
-function randomBtwn(lower, upper) {
-  const randomNumber = Math.floor(Math.random() * (upper - lower));
-
-  return lower + randomNumber;
+const isLessThan =  function (element1,element2) {
+  return element1 < element2;
 }
 
-function benchMark(size) {
-  const data = [];
-  for (let index = 0; index < size; index++) {
-    const element = randomBtwn(1, 100);
-    data.push(element);
-  }
-
-  const sortedData = sort(data);
-  console.log(`${size} -- ${numberOfIterations}`);
+const isGreaterThan = function (element1,element2) {
+  return element1 > element2; 
 }
 
-benchMark(10000);
+const data = [9,0,2,1];
+
+console.log("descending order",sort(data, isLessThan));
+console.log("ascending order",sort(data,isGreaterThan));
