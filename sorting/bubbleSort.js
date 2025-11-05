@@ -14,7 +14,7 @@ function sort(data, isLessThan) {
   return data;
 }
 
-const isStringLength = function (element1, element2) {
+const isStringLengthLess = function (element1, element2) {
   isLessThan(element1.length, element2.length);
 }
 
@@ -31,4 +31,4 @@ const dataOfStrings = ["a", "ab", "abc", "abcd"];
 
 console.log("descending order", sort(dataOfNums, isLessThan));
 console.log("ascending order", sort(dataOfNums, isGreaterThan));
-console.log("order of strings", sort(dataOfStrings, isStringLength));
+console.log("order of strings", sort(dataOfStrings, isStringLengthLess));
